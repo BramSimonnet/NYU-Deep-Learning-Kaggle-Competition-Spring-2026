@@ -2,7 +2,7 @@
 
 ## Team
 - Bram Simonnet
-- Ryan [Last Name]
+- Ryan Fleishman
 
 ## Project goal
 Generate valid SVG images from text prompts for the course Kaggle competition.
