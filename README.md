@@ -20,9 +20,9 @@ Unlike standard text generation tasks, this problem requires strict adherence to
   Fine-tunes a Qwen-based model with LoRA on filtered training data.
 
 - inference-book.ipynb  
-  Development inference notebook.
+  Initial development inference notebook.
 
-- DL_Kaggle_Comp_Inference_Book.ipynb  
+- inference-book-with-sim.ipynb  
   Final Kaggle submission notebook.
 
 - requirements.txt  
@@ -109,7 +109,8 @@ training-book.ipynb
 
 ### Inference / Submission
 Run the Kaggle submission notebook:
-DL_Kaggle_Comp_Inference_Book.ipynb
+inference-book-with-sim.ipynb
+note - in kaggle, link the weights as a dataset. Out of kaggle, you'll need to manually assign the path to your weights in the config cell
 
 This will:
 - load the fine-tuned model  
