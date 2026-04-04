@@ -5,7 +5,9 @@ transformers
 accelerate
 peft
 bitsandbytes
+torch
 pandas
 numpy
 scikit-learn
 lxml
+tqdm
