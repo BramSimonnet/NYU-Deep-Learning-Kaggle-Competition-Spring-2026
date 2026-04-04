@@ -16,23 +16,17 @@ Unlike standard text generation tasks, this problem requires strict adherence to
 
 ## Repository Structure
 
-- `notebooks/training.ipynb`  
+- training-book.ipynb  
   Fine-tunes a Qwen-based model with LoRA on filtered training data.
 
-- `notebooks/kaggle_inference_submission.ipynb`  
-  Final inference pipeline used for Kaggle submission.
+- inference-book.ipynb  
+  Development inference notebook.
 
-- `src/`  
-  Utility code for:
-  - SVG validation and repair  
-  - data formatting  
-  - inference helpers  
+- DL_Kaggle_Comp_Inference_Book.ipynb  
+  Final Kaggle submission notebook.
 
-- `report/`  
-  Final ACL-style report.
-
-- `assets/`  
-  Example generated SVG outputs.
+- requirements.txt  
+  Python dependencies required to reproduce results.
 
 ---
 
@@ -40,37 +34,37 @@ Unlike standard text generation tasks, this problem requires strict adherence to
 
 ### 1. Supervised Fine-Tuning
 
-We fine-tune a **Qwen2.5-Coder-1.5B-Instruct** model (4-bit) using Low-Rank Adaptation (LoRA) on the competition dataset.
+We fine-tune a Qwen2.5-Coder-1.5B-Instruct model (4-bit) using Low-Rank Adaptation (LoRA) on the competition dataset.
 
 Each example is formatted as a chat-style interaction:
-- **System:** instruction to generate compact, valid SVG only  
-- **User:** natural language prompt  
-- **Assistant:** target SVG  
+- System: instruction to generate compact, valid SVG only  
+- User: natural language prompt  
+- Assistant: target SVG  
 
-We apply strict filtering to ensure all training SVGs satisfy the competition constraints (valid XML, allowed tags, path limits). This prevents the model from learning invalid patterns.
+We apply strict filtering to ensure all training SVGs satisfy the competition constraints (valid XML, allowed tags, path limits). This prevents the model from learning invalid patterns and improves robustness at inference time.
 
 ---
 
 ### 2. Inference Pipeline
 
-Our final system is a hybrid pipeline combining retrieval, generation, and post-processing.
+Our final system uses a hybrid pipeline combining retrieval, generation, and post-processing.
 
-#### Retrieval
+#### Retrieval (Primary Mechanism)
 - TF-IDF vectorization (unigrams + bigrams)
 - cosine similarity between prompts
-- nearest-neighbor SVG reused for similar inputs
+- nearest-neighbor SVG is always used (threshold = 0.0)
 
 #### Generation
 - LoRA fine-tuned model
 - nucleus sampling (top-p = 0.9)
 - temperature = 0.7
-- max length = 1024 tokens
+- max generation length = 1024 tokens
 
 #### Post-processing
 - SVG extraction from model output
 - XML-based repair for malformed outputs
-- normalization to 256×256 canvas
-- enforcement of allowed tags and constraints
+- normalization to 256x256 canvas
+- enforcement of allowed tags and structural constraints
 
 #### Fallback
 - prompt-aware fallback SVG to guarantee valid output in failure cases
@@ -106,17 +100,49 @@ Our final system is a hybrid pipeline combining retrieval, generation, and post-
 
 ## How to Run
 
-## How to Run
+### Install Dependencies
+pip install -r requirements.txt
 
 ### Training
 Run the training notebook:
-`notebooks/training.ipynb`
+training-book.ipynb
 
 ### Inference / Submission
-Run the inference notebook:
-`notebooks/kaggle_inference_submission.ipynb`
+Run the Kaggle submission notebook:
+DL_Kaggle_Comp_Inference_Book.ipynb
 
 This will:
 - load the fine-tuned model  
 - generate SVG predictions for the test set  
-- save `submission.csv`  
+- save submission.csv  
+
+---
+
+## Model Weights
+
+Add link here:  
+[MODEL WEIGHTS LINK]
+
+---
+
+## Kaggle Submission Notebook
+
+Add link here:  
+[KAGGLE NOTEBOOK LINK]
+
+---
+
+## Key Design Insights
+
+- Validity is more important than expressiveness due to the evaluation metric  
+- Filtering invalid training data significantly improves robustness  
+- Retrieval is highly effective for in-distribution prompts  
+- Post-processing (repair + normalization) is critical for reducing invalid outputs  
+
+---
+
+## Acknowledgments
+
+This project was completed as part of the NYU Deep Learning Spring 2026 course.
+
+We use PyTorch, HuggingFace Transformers, TRL, and Unsloth for efficient fine-tuning and inference.
