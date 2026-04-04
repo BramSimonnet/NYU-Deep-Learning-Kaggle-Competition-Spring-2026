@@ -126,12 +126,6 @@ Add link here:
 
 ---
 
-## Kaggle Submission Notebook
-
-Add link here:  
-[KAGGLE NOTEBOOK LINK]
-
----
 
 ## Key Design Insights
 
