@@ -27,7 +27,8 @@ Unlike standard text generation tasks, this problem requires strict adherence to
 
 - requirements.txt  
   Python dependencies required to reproduce results.
-
+  
+- Model Weights : https://drive.google.com/file/d/1D_frItXAMRh0HU9FQXWWizza4DFxTMsx/view?usp=sharing
 ---
 
 ## Methodology
@@ -121,8 +122,7 @@ This will:
 
 ## Model Weights
 
-Add link here:  
-[MODEL WEIGHTS LINK]
+https://drive.google.com/file/d/1D_frItXAMRh0HU9FQXWWizza4DFxTMsx/view?usp=sharing
 
 ---
 
